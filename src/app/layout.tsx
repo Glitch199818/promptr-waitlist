@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "PromptEd",
+  title: "Promptr",
   description: "Capture and recall AI insights effortlessly.",
 };
 
