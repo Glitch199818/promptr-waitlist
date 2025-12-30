@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+nextjs-portal {
+  background-color: #fff;
+  left: unset !important;
+  top: unset !important;
+}
