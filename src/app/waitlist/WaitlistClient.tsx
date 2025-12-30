@@ -103,7 +103,7 @@ export default function WaitlistClient() {
 
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 py-16 sm:py-20 lg:py-24 relative">
         <img
-          src="/promptr-logo.png"
+          src="/Promptr-logo.png"
           alt="Promptr logo"
           className="pointer-events-none absolute left-4 top-4 h-16 w-auto drop-shadow-lg"
         />
