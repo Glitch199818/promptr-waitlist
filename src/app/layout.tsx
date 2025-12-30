@@ -5,9 +5,9 @@ export const metadata: Metadata = {
   title: "Promptr",
   description: "Capture and recall AI insights effortlessly.",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: "/favicon.ico.png",
+    shortcut: "/favicon.ico.png",
+    apple: "/favicon.ico.png",
   },
 };
 
