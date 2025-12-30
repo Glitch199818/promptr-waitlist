@@ -61,8 +61,8 @@ export default function ProfileDropdown() {
     
     // Notify extension to clear tokens
     try {
-      if (typeof chrome !== "undefined" && chrome.runtime?.id) {
-        chrome.runtime.sendMessage(chrome.runtime.id, { type: "logout" }).catch(() => {
+      if (typeof window !== "undefined" && (window as any).chrome?.runtime?.id) {
+        (window as any).chrome.runtime.sendMessage((window as any).chrome.runtime.id, { type: "logout" }).catch(() => {
           // Extension might not be available, ignore
         });
       }
