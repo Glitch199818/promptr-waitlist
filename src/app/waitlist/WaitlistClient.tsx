@@ -5,17 +5,17 @@ import { FormEvent, useMemo, useState } from "react";
 const features = [
   {
     title: "Save as you prompt",
-    desc: "No tab switching. No copy-paste. Save prompts directly as you work with AI tools.",
+    desc: "No tab switching. No copy-paste. Capture prompts naturally while working inside AI tools.",
     icon: "⤓",
   },
   {
     title: "Right where you need them",
-    desc: "Open your prompt library inside ChatGPT, Claude, Gemini, and other AI tools — without leaving the conversation.",
+    desc: "Access your prompt library while working in ChatGPT, Claude, Gemini, and other AI tools — without breaking your flow.",
     icon: "◎",
   },
   {
-    title: "Auto-detects AI tool",
-    desc: "Detects the AI tool automatically as you save. Always know what works best — and where.",
+    title: "Tool-aware by default",
+    desc: "Automatically keeps track of where each prompt works best.",
     icon: "☰",
   },
   {
