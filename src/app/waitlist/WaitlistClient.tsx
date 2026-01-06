@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import { FormEvent, useMemo, useState } from "react";
 
@@ -102,11 +102,40 @@ export default function WaitlistClient() {
       />
 
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 py-16 sm:py-20 lg:py-24 relative">
-        <img
-          src="/Promptr-logo.png"
-          alt="Promptr logo"
-          className="pointer-events-none absolute left-4 top-4 h-16 w-auto drop-shadow-lg"
-        />
+        {/* Header */}
+        <header className="mb-4 flex items-center justify-between gap-6">
+          <div className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-white via-neutral-400 to-neutral-700 shadow-md" />
+            <span className="text-lg font-semibold">Promptr</span>
+          </div>
+          <nav className="flex-1 flex items-center justify-center gap-6 text-sm">
+            <a href="#features" className="text-neutral-300 hover:text-white transition">
+              Feature
+            </a>
+            <a href="#how-it-works" className="text-neutral-300 hover:text-white transition">
+              How it works
+            </a>
+            <a href="#faq" className="text-neutral-300 hover:text-white transition">
+              FAQ
+            </a>
+          </nav>
+          <div className="flex items-center gap-3 text-sm">
+            <a
+              href="#"
+              className="h-9 w-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-sm text-white hover:bg-white/10"
+              aria-label="X"
+            >
+              X
+            </a>
+            <a
+              href="#waitlist"
+              className="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/30"
+            >
+              Get started
+            </a>
+          </div>
+        </header>
+        <div className="mb-8 h-px w-full bg-white/10" />
 
         {/* Hero */}
         <section className="flex flex-col items-center text-center gap-4">
@@ -199,7 +228,7 @@ export default function WaitlistClient() {
         </section>
 
         {/* Features */}
-        <section className="space-y-6">
+        <section id="features" className="space-y-6">
           <h2 className="text-lg font-semibold text-neutral-100 text-center mt-0">Built for your workflow</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((item) => (
@@ -213,6 +242,44 @@ export default function WaitlistClient() {
                 </div>
                 <p className="text-sm font-semibold text-neutral-100">{item.title}</p>
                 <p className="text-sm text-neutral-300">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* How it works */}
+        <section id="how-it-works" className="space-y-6">
+          <h2 className="text-lg font-semibold text-neutral-100 text-center mt-0">How it works</h2>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              { title: "Save", desc: "Capture prompts directly while you work. No context switching." },
+              { title: "Organize", desc: "Use names, folders, tags, and versions to stay tidy." },
+              { title: "Insert", desc: "Drop prompts into ChatGPT, Claude, or Gemini without leaving the page." },
+            ].map((step, idx) => (
+              <div
+                key={step.title}
+                className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_40px_-32px_rgba(0,0,0,0.8)] flex flex-col gap-2"
+              >
+                <span className="text-xs font-semibold text-neutral-400">Step {idx + 1}</span>
+                <p className="text-sm font-semibold text-white">{step.title}</p>
+                <p className="text-sm text-neutral-300">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="space-y-4">
+          <h2 className="text-lg font-semibold text-neutral-100 text-center mt-0">FAQ</h2>
+          <div className="space-y-2">
+            {[
+              { q: "What is Promptr?", a: "A prompt OS to save, organize, and insert prompts across AI tools." },
+              { q: "How do I join the waitlist?", a: "Enter your email above and click “Join waitlist.”" },
+              { q: "Which tools are supported?", a: "Works with ChatGPT, Claude, and Gemini, with more coming soon." },
+            ].map((item) => (
+              <div key={item.q} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-semibold text-white">{item.q}</p>
+                <p className="text-sm text-neutral-300 mt-1">{item.a}</p>
               </div>
             ))}
           </div>

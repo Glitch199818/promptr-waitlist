@@ -44,15 +44,15 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // Try to select with name and model first, fallback if columns don't exist
+    // Try to select with name, model, variables, and variable_defaults first, fallback if columns don't exist
     let { data, error } = await supabase
       .from("memories")
-      .select("id,text,tool,name,model,created_at")
+      .select("id,text,tool,name,model,variables,variable_defaults,created_at")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
-    // If name or model columns don't exist, retry without them
-    if (error && (error.message?.includes("name") || error.message?.includes("model"))) {
+    // If some columns don't exist, retry without them
+    if (error && (error.message?.includes("name") || error.message?.includes("model") || error.message?.includes("variables") || error.message?.includes("variable_defaults"))) {
       const retry = await supabase
         .from("memories")
         .select("id,text,tool,created_at")
@@ -69,11 +69,13 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // Ensure all items have name and model fields (null if not present or empty)
+    // Ensure all items have name, model, variables, and variable_defaults fields (null if not present or empty)
     const normalizedData = (data ?? []).map((item: any) => ({
       ...item,
       name: (item.name && item.name.trim()) ? item.name.trim() : null,
       model: (item.model && item.model.trim()) ? item.model.trim() : null,
+      variables: item.variables || null,
+      variable_defaults: item.variable_defaults || null,
     }));
 
     return NextResponse.json(normalizedData, { headers: corsHeaders(origin) });
@@ -117,20 +119,26 @@ export async function POST(req: NextRequest) {
     const name = (nameValue && nameValue.length > 0) ? nameValue : null;
     const modelValue = body.model?.trim();
     const model = (modelValue && modelValue.length > 0) ? modelValue : null;
+    
+    // Handle variables and variableDefaults
+    const variables = Array.isArray(body.variables) ? body.variables : null;
+    const variableDefaults = body.variableDefaults && typeof body.variableDefaults === "object" ? body.variableDefaults : null;
 
-    // Try to insert with name and model first
+    // Try to insert with name, model, variables, and variable_defaults first
     let insertData: any = {
       user_id: user.id,
       text,
       tool,
       name,
       model,
+      variables,
+      variable_defaults: variableDefaults,
     };
 
     let { error } = await supabase.from("memories").insert(insertData);
 
-    // If name or model columns don't exist, retry without them
-    if (error && (error.message?.includes("name") || error.message?.includes("model"))) {
+    // If some columns don't exist, retry without them
+    if (error && (error.message?.includes("name") || error.message?.includes("model") || error.message?.includes("variables") || error.message?.includes("variable_defaults"))) {
       insertData = {
         user_id: user.id,
         text,
