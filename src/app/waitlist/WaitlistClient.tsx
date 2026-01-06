@@ -35,11 +35,32 @@ const features = [
   },
 ];
 
+const faqs = [
+  {
+    q: "What is Promptr?",
+    a: "Promptr is a lightweight prompt library that helps you save, organize, and reuse your best AI snippets across the tools you use every day.",
+  },
+  {
+    q: "How do I join the waitlist?",
+    a: "Enter your email above and click “Join waitlist.” We’ll notify you as soon as Promptr is ready.",
+  },
+  {
+    q: "Which AI tools will it work with?",
+    a: "We’re building for the tools people actually use: ChatGPT, Claude, Gemini, and more—without breaking your workflow.",
+  },
+  {
+    q: "Will Promptr be free?",
+    a: "We’ll have a simple plan for individuals, with options for heavier usage and teams. Join the waitlist to get early access and launch details.",
+  },
+];
+
 export default function WaitlistClient() {
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [howItWorksVideoError, setHowItWorksVideoError] = useState(false);
 
   const isEmailValid = useMemo(() => {
     if (!email) return false;
@@ -101,16 +122,22 @@ export default function WaitlistClient() {
         }}
       />
 
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 py-16 sm:py-20 lg:py-24 relative">
+      <div className="mx-auto flex max-w-6xl flex-col gap-10 sm:gap-12 lg:gap-14 px-6 py-16 sm:py-20 lg:py-24 relative">
         {/* Header */}
         <header className="mb-4 flex items-center justify-between gap-6">
           <div className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-white via-neutral-400 to-neutral-700 shadow-md" />
+            <img
+              src="/favicon.ico.png"
+              alt="Promptr logo"
+              className="h-9 w-9 rounded-lg shadow-md"
+              loading="eager"
+              decoding="async"
+            />
             <span className="text-lg font-semibold">Promptr</span>
           </div>
           <nav className="flex-1 flex items-center justify-center gap-6 text-sm">
             <a href="#features" className="text-neutral-300 hover:text-white transition">
-              Feature
+              Features
             </a>
             <a href="#how-it-works" className="text-neutral-300 hover:text-white transition">
               How it works
@@ -121,61 +148,61 @@ export default function WaitlistClient() {
           </nav>
           <div className="flex items-center gap-3 text-sm">
             <a
-              href="#"
+              href="https://x.com/3D_Pointer"
+              target="_blank"
+              rel="noopener noreferrer"
               className="h-9 w-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-sm text-white hover:bg-white/10"
-              aria-label="X"
+              aria-label="Promptr on X"
+              title="Promptr on X"
             >
               X
             </a>
-            <a
-              href="#waitlist"
-              className="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/30"
-            >
-              Get started
-            </a>
           </div>
         </header>
-        <div className="mb-8 h-px w-full bg-white/10" />
+        <div className="mb-5 h-px w-full bg-white/10" />
 
         {/* Hero */}
-        <section className="flex flex-col items-center text-center gap-4">
+        <section id="waitlist" className="flex flex-col items-center text-center gap-5 sm:gap-6">
 
           <div className="relative">
             <div className="absolute -inset-x-24 -inset-y-12 rounded-[32px] bg-[radial-gradient(circle_at_center,rgba(180,180,200,0.18),transparent_55%)] blur-3xl" />
-            <div className="relative inline-flex items-center gap-2 rounded-md bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-200 shadow-sm ring-1 ring-white/10">
+            <div className="relative inline-flex items-center gap-2 rounded-full bg-white/6 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-neutral-100 shadow-sm ring-1 ring-white/12 backdrop-blur">
               Coming soon
             </div>
           </div>
 
-          <div className="space-y-4 max-w-3xl">
-            <h1
-              className="text-4xl font-medium tracking-tight sm:text-5xl"
-              style={{ fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif' }}
-            >
-              Your AI snippets. Always within reach.
-            </h1>
-            <p className="text-lg text-neutral-300 sm:text-xl">
-              Promptr lets you save, organize, and instantly reuse your best AI snippets across every tool you use.
-            </p>
+          <div className="relative w-full max-w-5xl px-2">
+            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.08),_transparent_60%)] blur-3xl" />
+            <div className="space-y-4 sm:space-y-5">
+              <h1
+                className="mx-auto max-w-4xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
+                style={{ fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif' }}
+              >
+                Your AI snippets. Always within reach.
+              </h1>
+              <p className="mx-auto max-w-3xl text-lg text-neutral-300 sm:text-xl">
+                Promptr lets you save, organize, and instantly reuse your best AI snippets across every tool you use.
+              </p>
+            </div>
           </div>
 
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-2xl space-y-2 rounded-2xl bg-white/5 px-4 py-3 shadow-[0_25px_120px_-60px_rgba(0,0,0,0.9)] ring-1 ring-white/10 backdrop-blur sm:h-[75px]"
+            className="w-full max-w-3xl space-y-2 rounded-3xl border border-white/12 bg-white/8 px-4 py-3 shadow-[0_24px_120px_-70px_rgba(0,0,0,0.9)] ring-1 ring-white/10 backdrop-blur-xl sm:px-5 sm:py-4"
           >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-neutral-50 placeholder:text-neutral-500 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/15"
+                placeholder="you@email.com"
+                className="h-[50px] flex-1 rounded-2xl border border-white/12 bg-white/5 px-4 text-neutral-50 placeholder:text-neutral-500 focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/20"
                 required
               />
               <button
                 type="submit"
                 disabled={!isEmailValid || submitting}
-                className="inline-flex h-[48px] min-w-[120px] items-center justify-center rounded-xl border border-white bg-white px-6 text-sm font-semibold text-black shadow-[0px_0px_0px_0px_rgba(0,0,0,0),0px_0px_0px_0px_rgba(0,0,0,0),0px_0px_0px_0px_rgba(0,0,0,0),0px_0px_0px_0px_rgba(0,0,0,0),0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] transition hover:shadow-[0_15px_60px_-20px_rgba(161,161,161,0.55)] focus:outline-none focus:ring-2 focus:ring-[#a1a1a1]/50 disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex h-[50px] min-w-[140px] items-center justify-center rounded-2xl border border-white/70 bg-white px-7 text-sm font-semibold text-black shadow-[0_10px_30px_-10px_rgba(255,255,255,0.35)] transition hover:shadow-[0_18px_60px_-25px_rgba(255,255,255,0.5)] focus:outline-none focus:ring-2 focus:ring-white/60 disabled:cursor-not-allowed disabled:opacity-70"
                 style={{ fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif' }}
               >
                 {submitting ? "Joining..." : "Join waitlist"}
@@ -183,9 +210,6 @@ export default function WaitlistClient() {
             </div>
             {errorMsg && (
               <p className="text-xs font-medium text-red-300 text-left px-1">{errorMsg}</p>
-            )}
-            {!successMsg && !errorMsg && (
-              <p className="text-xs text-neutral-400 text-left px-1 invisible">No spam. Early access only.</p>
             )}
           </form>
           <div className="space-y-0 text-center text-xl text-neutral-300">
@@ -249,41 +273,127 @@ export default function WaitlistClient() {
 
         {/* How it works */}
         <section id="how-it-works" className="space-y-6">
-          <h2 className="text-lg font-semibold text-neutral-100 text-center mt-0">How it works</h2>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              { title: "Save", desc: "Capture prompts directly while you work. No context switching." },
-              { title: "Organize", desc: "Use names, folders, tags, and versions to stay tidy." },
-              { title: "Insert", desc: "Drop prompts into ChatGPT, Claude, or Gemini without leaving the page." },
-            ].map((step, idx) => (
-              <div
-                key={step.title}
-                className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_40px_-32px_rgba(0,0,0,0.8)] flex flex-col gap-2"
-              >
-                <span className="text-xs font-semibold text-neutral-400">Step {idx + 1}</span>
-                <p className="text-sm font-semibold text-white">{step.title}</p>
-                <p className="text-sm text-neutral-300">{step.desc}</p>
+          <div className="text-center space-y-3">
+            <h2 className="text-xl sm:text-2xl font-semibold text-neutral-100 mt-0">How it works</h2>
+            <p className="mx-auto max-w-2xl text-sm sm:text-base text-neutral-300">
+              A tight loop for better prompts: capture → refine → reuse. Built to keep you in flow.
+            </p>
+          </div>
+
+          <div className="relative">
+            <div
+              className="pointer-events-none absolute inset-0 -z-10 rounded-[28px] opacity-70 blur-3xl"
+              style={{
+                background:
+                  "radial-gradient(circle at 20% 15%, rgba(255,255,255,0.12), transparent 45%), radial-gradient(circle at 80% 20%, rgba(160,160,210,0.16), transparent 42%), radial-gradient(circle at 50% 90%, rgba(120,120,160,0.10), transparent 45%)",
+              }}
+            />
+
+            <div className="rounded-[28px] border border-white/10 bg-white/5 p-3 shadow-[0_35px_160px_-70px_rgba(0,0,0,0.85)] backdrop-blur">
+              <div className="relative overflow-hidden rounded-2xl bg-black/30">
+                {/* Place your demo video at: web/public/how-it-works.mp4 */}
+                {!howItWorksVideoError ? (
+                  <video
+                    className="block w-full aspect-video"
+                    src="/how-it-works.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    onError={() => setHowItWorksVideoError(true)}
+                  />
+                ) : (
+                  <div className="aspect-video w-full grid place-items-center px-6 text-center">
+                    <div className="max-w-xl">
+                      <p className="text-sm font-semibold text-white">Demo video not found</p>
+                      <p className="mt-1 text-sm text-neutral-300">
+                        Add <span className="font-semibold text-white">how-it-works.mp4</span> to{" "}
+                        <span className="font-semibold text-white">web/public</span> to show the How it works video.
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
-            ))}
+            </div>
           </div>
         </section>
 
-        {/* FAQ */}
+        {/* FAQ (accordion) */}
         <section id="faq" className="space-y-4">
-          <h2 className="text-lg font-semibold text-neutral-100 text-center mt-0">FAQ</h2>
-          <div className="space-y-2">
-            {[
-              { q: "What is Promptr?", a: "A prompt OS to save, organize, and insert prompts across AI tools." },
-              { q: "How do I join the waitlist?", a: "Enter your email above and click “Join waitlist.”" },
-              { q: "Which tools are supported?", a: "Works with ChatGPT, Claude, and Gemini, with more coming soon." },
-            ].map((item) => (
-              <div key={item.q} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-sm font-semibold text-white">{item.q}</p>
-                <p className="text-sm text-neutral-300 mt-1">{item.a}</p>
-              </div>
-            ))}
+          <div className="text-center space-y-2">
+            <h2 className="text-xl sm:text-2xl font-semibold text-neutral-100 mt-0">FAQ</h2>
+          </div>
+
+          <div className="mx-auto w-full max-w-3xl space-y-2">
+            {faqs.map((item, idx) => {
+              const open = openFaqIndex === idx;
+              return (
+                <div
+                  key={item.q}
+                  className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur"
+                >
+                  <button
+                    type="button"
+                    className="w-full px-4 py-4 flex items-center justify-between gap-4 text-left"
+                    onClick={() => setOpenFaqIndex((prev) => (prev === idx ? null : idx))}
+                    aria-expanded={open}
+                    aria-controls={`faq-panel-${idx}`}
+                  >
+                    <span className="text-sm sm:text-base font-semibold text-white">
+                      {item.q}
+                    </span>
+                    <span
+                      className={[
+                        "h-8 w-8 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white transition",
+                        open ? "rotate-45 bg-white/10" : "rotate-0",
+                      ].join(" ")}
+                      aria-hidden="true"
+                    >
+                      +
+                    </span>
+                  </button>
+                  <div
+                    id={`faq-panel-${idx}`}
+                    className={[
+                      "grid transition-all duration-200 ease-out",
+                      open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+                    ].join(" ")}
+                  >
+                    <div className="overflow-hidden px-4 pb-4">
+                      <p className="text-sm text-neutral-300">{item.a}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="mt-4 border-t border-white/10 pt-8 text-sm text-neutral-400">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-neutral-500">
+              © {new Date().getFullYear()} Promptr. All rights reserved.
+            </p>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://x.com/3D_Pointer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-300 hover:text-white transition"
+              >
+                X (Twitter)
+              </a>
+              <a
+                href="mailto:hello@promptr.app"
+                className="text-neutral-300 hover:text-white transition"
+              >
+                Contact
+              </a>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );
