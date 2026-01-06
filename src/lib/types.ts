@@ -17,6 +17,8 @@ export type Database = {
           tool: string | null;
           name: string | null;
           model: string | null;
+          variables: string[] | null;
+          variable_defaults: Json | null;
           created_at: string;
         };
         Insert: {
@@ -26,6 +28,8 @@ export type Database = {
           tool?: string | null;
           name?: string | null;
           model?: string | null;
+          variables?: string[] | null;
+          variable_defaults?: Json | null;
           created_at?: string;
         };
         Update: {
@@ -35,6 +39,8 @@ export type Database = {
           tool?: string | null;
           name?: string | null;
           model?: string | null;
+          variables?: string[] | null;
+          variable_defaults?: Json | null;
           created_at?: string;
         };
         Relationships: [];

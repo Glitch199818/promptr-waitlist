@@ -209,11 +209,16 @@ export default function MemoriesPage() {
     setErrorMsg(null);
     try {
       // Try to select all fields including variables
-      let { data, error } = await supabase
+      // Note: we intentionally widen types here because we have a runtime fallback
+      // when columns are missing (different SELECT lists produce different TS types).
+      let data: any[] | null = null;
+      let error: any = null;
+
+      ({ data, error } = await supabase
         .from("memories")
         .select("id,text,tool,name,model,variables,variable_defaults,created_at")
         .eq("user_id", userId)
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false }));
       
       // If some columns don't exist, retry without them (but always include name!)
       if (error && (error.message?.includes("name") || error.message?.includes("model") || error.message?.includes("variables") || error.message?.includes("variable_defaults"))) {
@@ -542,6 +547,11 @@ export default function MemoriesPage() {
     if (!currentUserId) {
       const { data: sessionData } = await supabase.auth.getSession();
       currentUserId = sessionData.session?.user.id ?? null;
+    }
+
+    if (!currentUserId) {
+      setErrorMsg("You must be logged in to duplicate a prompt.");
+      return;
     }
 
     const { error } = await supabase
@@ -887,6 +897,11 @@ export default function MemoriesPage() {
       if (!currentUserId) {
         const { data: sessionData } = await supabase.auth.getSession();
         currentUserId = sessionData.session?.user.id ?? null;
+      }
+
+      if (!currentUserId) {
+        setErrorMsg("You must be logged in to import prompts.");
+        return;
       }
 
       const toInsert = imported.map((item: any) => ({
