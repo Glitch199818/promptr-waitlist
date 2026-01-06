@@ -478,7 +478,7 @@ export default function MemoriesPage() {
       };
     });
 
-    const updateData: Database["public"]["Tables"]["memories"]["Update"] = { 
+    const updateData = { 
       name: finalName, 
       text: editText.trim(),
       tool: editTool.trim() || null
@@ -490,7 +490,7 @@ export default function MemoriesPage() {
 
     const { data, error } = await supabase
       .from("memories")
-      .update(updateData)
+      .update(updateData as Database["public"]["Tables"]["memories"]["Update"])
       .eq("id", editingMemory.id)
       .eq("user_id", currentUserId)
       .select();
