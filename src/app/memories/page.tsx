@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import ProfileDropdown from "@/components/ProfileDropdown";
+import { Database } from "@/lib/types";
 
 type Memory = {
   id: string;
@@ -477,7 +478,7 @@ export default function MemoriesPage() {
       };
     });
 
-    const updateData = { 
+    const updateData: Database["public"]["Tables"]["memories"]["Update"] = { 
       name: finalName, 
       text: editText.trim(),
       tool: editTool.trim() || null
