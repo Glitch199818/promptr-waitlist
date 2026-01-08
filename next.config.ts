@@ -6,6 +6,15 @@ const nextConfig: NextConfig = {
     // other lockfiles in parent directories.
     root: __dirname,
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/waitlist",
+        permanent: true, // 308 permanent redirect (better for SEO)
+      },
+    ];
+  },
 };
 
 export default nextConfig;
